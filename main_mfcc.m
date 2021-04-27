@@ -32,6 +32,8 @@ for i = 1:size(accents,1)
 end
 
 knn_data = zeros(10000,14*4);
+gt = zeros(10000,1);
+gt = data.accents(1:10000);
 tic
 for i = 1:10000
 	[y,fs] = audioread(train_path + data.filename(i));
@@ -50,6 +52,11 @@ for i = 1:10000
 	end
 end
 toc
+%% nnent
+%nnet test
+options.method = 'nnet';
+options.nnet_hiddenLayerSize = 1000;
+[confusionMatrix_nnet1,accuracy_nnet1] =  classify677_hwk7(knn_data,gt,options);
 
 %% setup matrix
 c_mat = zeros(size(accents,1),size(accents,1));
