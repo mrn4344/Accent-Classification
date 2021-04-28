@@ -31,11 +31,14 @@ for i = 1:size(accents,1)
 	testdata.accents(replacedata) = i;
 end
 
-knn_data = zeros(10000,14*4);
-gt = zeros(10000,1);
-gt = data.accents(1:10000);
+knn_data = zeros(20000,14*4);
+gt = zeros(20000,1);
+gt = data.accents(1:20000);
 tic
-for i = 1:10000
+for i = 1:20000
+	if i == 15277
+		continue
+	end
 	[y,fs] = audioread(train_path + data.filename(i));
 	bound = detectSpeech(y,fs);
 	y = y(bound(1):bound(2));
@@ -52,6 +55,12 @@ for i = 1:10000
 	end
 end
 toc
+
+%% balance data
+
+
+
+
 %% nnent
 %nnet test
 options.method = 'nnet';
